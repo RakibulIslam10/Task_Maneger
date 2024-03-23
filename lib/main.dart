@@ -1,10 +1,6 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmanager/App.dart';
 
-void main() => runApp(
-      DevicePreview(
-        enabled: true,
-        builder: (context) => const TaskManager(),
-      ),
-    );
+void main(){
+  runApp(const TaskManager());
+}

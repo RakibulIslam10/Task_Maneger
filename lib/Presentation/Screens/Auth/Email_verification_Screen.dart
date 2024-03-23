@@ -113,6 +113,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             MaterialPageRoute(
               builder: (context) => PinVerificationScreen(email: _emailController.text),
             ));
+        showSnackBarMessage(context, "Otp send on your email");
       }
     } else {
       if (mounted) {

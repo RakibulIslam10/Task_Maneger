@@ -51,7 +51,14 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SingInScreen(),
+                          ),
+                              (route) => false);
+                    },
                     child: const Text(
                       "Confirm",
                       style: TextStyle(fontSize: 16),
