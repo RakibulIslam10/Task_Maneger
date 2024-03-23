@@ -23,7 +23,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: profileAppBar,
+      appBar: profileAppBar(),
       body: BackgroundWidget(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

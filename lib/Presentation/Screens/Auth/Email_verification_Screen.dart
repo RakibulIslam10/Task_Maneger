@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/Data/Service/Network_Caller.dart';
+import 'package:taskmanager/Data/Utils/Urls.dart';
 import 'package:taskmanager/Presentation/Screens/Auth/Pin_verification_Screen.dart';
 import 'package:taskmanager/Presentation/Utils/Style.dart';
 import 'package:taskmanager/Presentation/Widget/Background_Widget.dart';
+import 'package:taskmanager/Presentation/Widget/SnackBar_Message.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
 
   @override
-  State<EmailVerificationScreen> createState() =>_EmailVerificationScreenState();
+  State<EmailVerificationScreen> createState() =>
+      _EmailVerificationScreenState();
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  final TextEditingController _EmailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  bool _sendOtpInProgress = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,21 +42,27 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 ),
                 const SizedBox(height: 45),
                 TextFormField(
-                  controller: _EmailController,
+                  validator: (value) {
+                    if(value!.isEmpty){
+                      return "Please enter email";
+                    }return null;
+                  },
+                  controller: _emailController,
                   decoration: const InputDecoration(hintText: "Email"),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>  PinVerificationScreen(receiverMail: _EmailController.text),
-                          ));
-                    },
-                    child: const Icon(Icons.arrow_circle_right_outlined),
+                  child: Visibility(visible: _sendOtpInProgress == false,
+                    replacement:  const Center(child:CircularProgressIndicator() ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if(_formkey.currentState!.validate()) {
+                          _sendOtp();
+                        }
+                      },
+                      child: const Icon(Icons.arrow_circle_right_outlined),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -79,5 +91,33 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
+  @override
+  void deactivate() {
+    _emailController.dispose();
+    super.deactivate();
+  }
 
+  Future<void> _sendOtp() async {
+    setState(() {
+      _sendOtpInProgress = true;
+    });
+
+    final response = await NetworkCaller.getRequest(
+        Urls.sendOtp(_emailController.text.trim()));
+    _sendOtpInProgress = false;
+    setState(() {});
+    if (response.isSuccess) {
+      if (mounted) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PinVerificationScreen(email: _emailController.text),
+            ));
+      }
+    } else {
+      if (mounted) {
+        showSnackBarMessage(context, "Send Otp is failed");
+      }
+    }
+  }
 }

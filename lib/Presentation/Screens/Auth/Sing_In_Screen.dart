@@ -21,11 +21,11 @@ class SingInScreen extends StatefulWidget {
 }
 
 class _SingInScreenState extends State<SingInScreen> {
-  final TextEditingController _EmailController = TextEditingController();
-  final TextEditingController _PasswordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  bool _LoginInProgress = true;
+  bool _loginInProgress = true;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _SingInScreenState extends State<SingInScreen> {
                       }
                       return null;
                     },
-                    controller: _EmailController,
+                    controller: _emailController,
                     decoration: const InputDecoration(hintText: "Email"),
                   ),
                   const SizedBox(height: 16),
@@ -67,7 +67,7 @@ class _SingInScreenState extends State<SingInScreen> {
                       return null;
                     },
                     obscureText: true,
-                    controller: _PasswordController,
+                    controller: _passwordController,
                     decoration: const InputDecoration(hintText: "Password"),
                   ),
                   const SizedBox(height: 16),
@@ -77,17 +77,17 @@ class _SingInScreenState extends State<SingInScreen> {
                         onPressed: () async {
                           if (_formkey.currentState!.validate()) {
                             setState(() {
-                              _LoginInProgress = false;
+                              _loginInProgress = false;
                             });
                             Map<String, dynamic> IputParams = {
-                              "email": _EmailController.text.trim(),
-                              "password": _PasswordController.text,
+                              "email": _emailController.text.trim(),
+                              "password": _passwordController.text,
                             };
                             final ResponseObject response =
                                 await NetworkCaller.postRequest(
                                     Urls.login, IputParams,formInSingIn: true);
                             setState(() {
-                              _LoginInProgress = true;
+                              _loginInProgress = true;
                             });
                             if (response.isSuccess) {
                               if (mounted) {
@@ -120,7 +120,7 @@ class _SingInScreenState extends State<SingInScreen> {
                             }
                           }
                         },
-                        child: _LoginInProgress
+                        child: _loginInProgress
                             ? const Icon(Icons.arrow_circle_right_outlined)
                             : const Center(
                                 child: CircularProgressIndicator(),
@@ -178,8 +178,8 @@ class _SingInScreenState extends State<SingInScreen> {
 
   @override
   void dispose() {
-    _PasswordController.dispose();
-    _EmailController.dispose();
+    _passwordController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 }

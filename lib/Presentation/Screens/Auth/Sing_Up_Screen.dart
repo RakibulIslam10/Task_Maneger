@@ -13,15 +13,15 @@ class SingUpScreen extends StatefulWidget {
 }
 
 class _SingUpScreenState extends State<SingUpScreen> {
-  final TextEditingController _EmailController = TextEditingController();
-  final TextEditingController _PasswordController = TextEditingController();
-  final TextEditingController _FirstNameController = TextEditingController();
-  final TextEditingController _LastNameController = TextEditingController();
-  final TextEditingController _MobileController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  bool _RegistationInprogress = true;
+  bool _registrationInProgress = true;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       }
                       return null;
                     },
-                    controller: _EmailController,
+                    controller: _emailController,
                     decoration: const InputDecoration(hintText: "Email"),
                   ),
                   const SizedBox(height: 16),
@@ -58,7 +58,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       }
                       return null;
                     },
-                    controller: _FirstNameController,
+                    controller: _firstNameController,
                     decoration: const InputDecoration(hintText: "Frist Name"),
                   ),
                   const SizedBox(height: 16),
@@ -69,7 +69,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       }
                       return null;
                     },
-                    controller: _LastNameController,
+                    controller: _lastNameController,
                     decoration: const InputDecoration(hintText: "Last Name"),
                   ),
                   const SizedBox(height: 16),
@@ -81,7 +81,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       return null;
                     },
                     keyboardType: TextInputType.number,
-                    controller: _MobileController,
+                    controller: _mobileController,
                     decoration: const InputDecoration(hintText: "Mobile"),
                   ),
                   const SizedBox(height: 16),
@@ -96,7 +96,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       return null;
                     },
                     obscureText: true,
-                    controller: _PasswordController,
+                    controller: _passwordController,
                     decoration: const InputDecoration(hintText: "Password"),
                   ),
                   const SizedBox(height: 16),
@@ -106,20 +106,20 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         onPressed: () async {
                           if (_formkey.currentState!.validate()) {
                             setState(() {
-                              _RegistationInprogress = false;
+                              _registrationInProgress = false;
                             });
                             Map<String, dynamic> InputParams = {
-                              "email": _EmailController.text.trim(),
-                              "firstName": _FirstNameController.text.trim(),
-                              "lastName": _LastNameController.text.trim(),
-                              "mobile": _MobileController.text.trim(),
-                              "password": _PasswordController.text.trim(),
+                              "email": _emailController.text.trim(),
+                              "firstName": _firstNameController.text.trim(),
+                              "lastName": _lastNameController.text.trim(),
+                              "mobile": _mobileController.text.trim(),
+                              "password": _passwordController.text.trim(),
                             };
                             final ResponseObject response =
                                 await NetworkCaller.postRequest(
                                     Urls.registration, InputParams);
                             setState(() {
-                              _RegistationInprogress = true;
+                              _registrationInProgress = true;
                             });
                             if (response.isSuccess) {
                               if (mounted) {
@@ -135,7 +135,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                             }
                           }
                         },
-                        child: _RegistationInprogress
+                        child: _registrationInProgress
                             ? const Icon(Icons.arrow_circle_right_outlined)
                             : const Center(
                                 child: CircularProgressIndicator(),
@@ -170,11 +170,11 @@ class _SingUpScreenState extends State<SingUpScreen> {
 
   @override
   void dispose() {
-    _PasswordController.dispose();
-    _EmailController.dispose();
-    _FirstNameController.dispose();
-    _LastNameController.dispose();
-    _MobileController.dispose();
+    _passwordController.dispose();
+    _emailController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _mobileController.dispose();
     super.dispose();
   }
 }

@@ -9,8 +9,7 @@ class AuthControllers {
 
   static Future<void> SaveUserData(UserData userData) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(
-        "UserData", jsonEncode(userData.toJson()));
+    await sharedPreferences.setString("UserData", jsonEncode(userData.toJson()));
     AuthControllers.userData = userData;
   }
 

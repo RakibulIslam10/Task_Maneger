@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmanager/App.dart';
@@ -7,12 +9,15 @@ import 'package:taskmanager/Presentation/Screens/Update_Profile_Screen.dart';
 import 'package:taskmanager/Presentation/Utils/Assets_Path.dart';
 import 'package:taskmanager/Presentation/Utils/Style.dart';
 
-AppBar get profileAppBar {
+AppBar profileAppBar({bool isUpdateScreen = false}) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: ColorGreen,
     title: GestureDetector(
       onTap: () {
+        if(isUpdateScreen == true){
+          return ;
+        }
         Navigator.push(
             TaskManager.navigatorKey.currentState!.context,
             MaterialPageRoute(
@@ -21,7 +26,11 @@ AppBar get profileAppBar {
       },
       child: Row(children: [
         CircleAvatar(
-          backgroundImage: AssetImage(AssetsPath.Profilejpeg),
+          backgroundImage: (AuthControllers .userData!.photo ?? null) != null
+              ? MemoryImage(base64Decode(AuthControllers.userData!.photo!
+              .split('data:image/png;base64,')
+              .last))
+              : null,
         ),
         const SizedBox(width: 12),
         Expanded(

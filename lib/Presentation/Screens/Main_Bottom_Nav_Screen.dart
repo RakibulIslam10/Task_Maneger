@@ -13,28 +13,28 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
-  int SelectedIndex = 0;
+  int selectedIndex = 0;
 
-  final List<Widget> _Screens = [
+  final List<Widget> _screens = [
     const NewTaskScreen(),
     const CompletedTaskScreen(),
     const ProgressTaskScreen(),
-    const CancelledTaskScreen(),
+    const CancelledTaskScreen()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _Screens[SelectedIndex],
+      body: _screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
           // type: BottomNavigationBarType.fixed,
           //   backgroundColor: ColorDarkBlue,
           selectedItemColor: ColorDarkBlue,
           unselectedItemColor: ColorLightGray,
           showUnselectedLabels: true,
-          currentIndex: SelectedIndex,
+          currentIndex: selectedIndex,
           onTap: (index) {
-            SelectedIndex = index;
+            selectedIndex = index;
             if (mounted) {
               setState(() {});
             }

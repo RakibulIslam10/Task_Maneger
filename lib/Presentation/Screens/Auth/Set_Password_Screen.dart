@@ -5,14 +5,13 @@ import 'package:taskmanager/Presentation/Widget/Background_Widget.dart';
 
 class SetPasswordScreen extends StatefulWidget {
   const SetPasswordScreen({super.key});
-
   @override
   State<SetPasswordScreen> createState() => _SetPasswordScreenState();
 }
 
 class _SetPasswordScreenState extends State<SetPasswordScreen> {
-  final TextEditingController _PasswordController = TextEditingController();
-  final TextEditingController _ConfirmPasswordController =
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
       TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -39,12 +38,12 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  controller: _PasswordController,
+                  controller: _passwordController,
                   decoration: const InputDecoration(hintText: "Password"),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _ConfirmPasswordController,
+                  controller: _confirmPasswordController,
                   decoration:
                       const InputDecoration(hintText: "Confirm Password"),
                 ),
@@ -92,8 +91,8 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
   @override
   void dispose() {
-    _PasswordController.dispose();
-    _ConfirmPasswordController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 }
