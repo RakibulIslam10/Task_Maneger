@@ -143,7 +143,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
         Urls.receivedSendOtp(widget.email, _pinController.text));
     _pinverifyInProgress = false;
     setState(() {});
-    if (response.isSuccess) {
+    if (response.ResponseBody['status'] == 'success') {
       if (mounted) {
         Navigator.push(
             context,
