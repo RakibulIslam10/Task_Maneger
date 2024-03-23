@@ -148,7 +148,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const SetPasswordScreen(),
+              builder: (context) => SetPasswordScreen(
+                  email: widget.email, otp: _pinController.text),
             ));
       }
     } else {

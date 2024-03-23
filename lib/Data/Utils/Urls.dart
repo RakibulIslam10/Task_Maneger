@@ -16,4 +16,5 @@ static String receivedSendOtp(String email,String otp) => "$_baseUrl/RecoverVeri
   static String updateTaskStatus(String id, String status) =>
       "$_baseUrl/updateTaskStatus/$id/$status";
   static String updateProfile = "$_baseUrl/profileUpdate";
+  static String recoverResetPass='$_baseUrl/RecoverResetPass';
 }
