@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:taskmanager/Data/Models/LoginResponse.dart';
-import 'package:taskmanager/Data/Models/Response_Object.dart';
-import 'package:taskmanager/Data/Service/Network_Caller.dart';
-import 'package:taskmanager/Data/Utils/Urls.dart';
-import 'package:taskmanager/Presentation/Controllers/Auth_Controllers.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:taskmanager/Presentation/Screens/Auth/Email_verification_Screen.dart';
+import 'package:taskmanager/Presentation/Screens/Auth/Sing_In_Controller.dart';
 import 'package:taskmanager/Presentation/Screens/Auth/Sing_Up_Screen.dart';
 import 'package:taskmanager/Presentation/Screens/Main_Bottom_Nav_Screen.dart';
 import 'package:taskmanager/Presentation/Utils/Style.dart';
@@ -25,7 +20,7 @@ class _SingInScreenState extends State<SingInScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  bool _loginInProgress = true;
+  final SingInController _singInController = SingInController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,58 +68,22 @@ class _SingInScreenState extends State<SingInScreen> {
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          if (_formkey.currentState!.validate()) {
-                            setState(() {
-                              _loginInProgress = false;
-                            });
-                            Map<String, dynamic> IputParams = {
-                              "email": _emailController.text.trim(),
-                              "password": _passwordController.text,
-                            };
-                            final ResponseObject response =
-                                await NetworkCaller.postRequest(
-                                    Urls.login, IputParams,formInSingIn: true);
-                            setState(() {
-                              _loginInProgress = true;
-                            });
-                            if (response.isSuccess) {
-                              if (mounted) {
-                                LoginResponse loginResponse =
-                                    LoginResponse.fromJson(
-                                        response.ResponseBody);
-
-                                await AuthControllers.SaveUserData(
-                                    loginResponse.userdata!);
-                                await AuthControllers.SaveToken(
-                                    loginResponse.token!);
-
-                                if (mounted) {
-                                  showSnackBarMessage(
-                                      context, "Login Successful");
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const MainBottomNavScreen(),
-                                      ),
-                                      (route) => false);
-                                }
+                    child: GetBuilder<SingInController>(
+                        builder: (singInController) {
+                      return Visibility(
+                        visible: singInController.inProgress == false,
+                        replacement:
+                            const Center(child: CircularProgressIndicator()),
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              if (_formkey.currentState!.validate()) {
+                                _singIn();
                               }
-                            } else {
-                              if (mounted) {
-                                showSnackBarMessage(
-                                    context, "Login Failed!", true);
-                              }
-                            }
-                          }
-                        },
-                        child: _loginInProgress
-                            ? const Icon(Icons.arrow_circle_right_outlined)
-                            : const Center(
-                                child: CircularProgressIndicator(),
-                              )),
+                            },
+                            child:
+                                const Icon(Icons.arrow_circle_right_outlined)),
+                      );
+                    }),
                   ),
                   const SizedBox(height: 60),
                   Center(
@@ -181,5 +140,25 @@ class _SingInScreenState extends State<SingInScreen> {
     _passwordController.dispose();
     _emailController.dispose();
     super.dispose();
+  }
+
+  Future<void> _singIn() async {
+    final result = await _singInController.singIn(
+        _emailController.text.trim(), _passwordController.text);
+    if (result) {
+      if (mounted) {
+        showSnackBarMessage(context, "Login Successful");
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MainBottomNavScreen(),
+            ),
+            (route) => false);
+      }
+    } else {
+      if (mounted) {
+        showSnackBarMessage(context, _singInController.errorMessage);
+      }
+    }
   }
 }

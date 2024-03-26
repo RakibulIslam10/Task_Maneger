@@ -6,7 +6,6 @@ import 'package:taskmanager/App.dart';
 import 'package:taskmanager/Presentation/Controllers/Auth_Controllers.dart';
 import 'package:taskmanager/Presentation/Screens/Auth/Sing_In_Screen.dart';
 import 'package:taskmanager/Presentation/Screens/Update_Profile_Screen.dart';
-import 'package:taskmanager/Presentation/Utils/Assets_Path.dart';
 import 'package:taskmanager/Presentation/Utils/Style.dart';
 
 AppBar profileAppBar({bool isUpdateScreen = false}) {
@@ -15,8 +14,8 @@ AppBar profileAppBar({bool isUpdateScreen = false}) {
     backgroundColor: ColorGreen,
     title: GestureDetector(
       onTap: () {
-        if(isUpdateScreen == true){
-          return ;
+        if (isUpdateScreen == true) {
+          return;
         }
         Navigator.push(
             TaskManager.navigatorKey.currentState!.context,
@@ -26,10 +25,10 @@ AppBar profileAppBar({bool isUpdateScreen = false}) {
       },
       child: Row(children: [
         CircleAvatar(
-          backgroundImage: (AuthControllers .userData!.photo ?? null) != null
+          backgroundImage: (AuthControllers.userData!.photo) != null
               ? MemoryImage(base64Decode(AuthControllers.userData!.photo!
-              .split('data:image/png;base64,')
-              .last))
+                  .split('data:image/png;base64,')
+                  .last))
               : null,
         ),
         const SizedBox(width: 12),
@@ -43,8 +42,9 @@ AppBar profileAppBar({bool isUpdateScreen = false}) {
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               Text(
-                 AuthControllers.userData?.email?? "",
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                AuthControllers.userData?.email ?? "",
+                style:
+                    const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
               )
             ],
           ),
