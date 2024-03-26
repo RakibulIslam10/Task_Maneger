@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager/App.dart';
 import 'package:taskmanager/Presentation/Controllers/Auth_Controllers.dart';
 import 'package:taskmanager/Presentation/Screens/Auth/Sing_In_Screen.dart';
+import 'package:taskmanager/Presentation/Screens/Splash_Screen.dart';
 import 'package:taskmanager/Presentation/Screens/Update_Profile_Screen.dart';
 import 'package:taskmanager/Presentation/Utils/Style.dart';
 
@@ -63,7 +64,7 @@ AppBar profileAppBar({bool isUpdateScreen = false}) {
             Navigator.pushAndRemoveUntil(
                 TaskManager.navigatorKey.currentState!.context,
                 MaterialPageRoute(
-                  builder: (context) => const SingInScreen(),
+                  builder: (context) => const SplashScreen(),
                 ),
                 (route) => false);
           },

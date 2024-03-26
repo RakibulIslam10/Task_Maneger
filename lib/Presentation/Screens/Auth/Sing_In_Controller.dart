@@ -27,7 +27,7 @@ class SingInController extends GetxController {
         formInSingIn: true);
 
     _inProgress = false;
-
+    update();
     if (response.isSuccess) {
       LoginResponse loginResponse =
           LoginResponse.fromJson(response.ResponseBody);
