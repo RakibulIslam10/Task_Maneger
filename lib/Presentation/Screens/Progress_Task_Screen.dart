@@ -20,6 +20,8 @@ bool _updateTaskInProgress = false;
 
 TaskListWrapper _progressTaskListWrapper = TaskListWrapper();
 
+
+
 class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
   @override
   void initState() {

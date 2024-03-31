@@ -97,7 +97,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     super.deactivate();
   }
 
-  Future<void> _sendOtp() async {
+  Future<void> _sendOtp()async{
     setState(() {
       _sendOtpInProgress = true;
     });

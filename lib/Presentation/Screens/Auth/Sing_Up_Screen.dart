@@ -38,7 +38,10 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 children: [
                   const SizedBox(height: 60),
                   Text("Join With Us",
-                      style: Theme.of(context).textTheme.titleLarge),
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleLarge),
                   const SizedBox(height: 50),
                   TextFormField(
                     validator: (value) {
@@ -116,8 +119,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
                               "password": _passwordController.text.trim(),
                             };
                             final ResponseObject response =
-                                await NetworkCaller.postRequest(
-                                    Urls.registration, InputParams);
+                            await NetworkCaller.postRequest(
+                                Urls.registration, InputParams);
                             setState(() {
                               _registrationInProgress = true;
                             });
@@ -138,8 +141,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         child: _registrationInProgress
                             ? const Icon(Icons.arrow_circle_right_outlined)
                             : const Center(
-                                child: CircularProgressIndicator(),
-                              )),
+                          child: CircularProgressIndicator(),
+                        )),
                   ),
                   const SizedBox(height: 32),
                   Row(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:taskmanager/Presentation/Screens/Auth/Email_verification_Screen.dart';
-import 'package:taskmanager/Presentation/Screens/Auth/Sing_In_Controller.dart';
+import 'package:taskmanager/Presentation/Controllers/Sing_In_Controller.dart';
 import 'package:taskmanager/Presentation/Screens/Auth/Sing_Up_Screen.dart';
 import 'package:taskmanager/Presentation/Screens/Main_Bottom_Nav_Screen.dart';
 import 'package:taskmanager/Presentation/Utils/Style.dart';
@@ -20,7 +22,8 @@ class _SingInScreenState extends State<SingInScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  final SingInController _singInController = SingInController();
+  final SingInController _singInController = Get.find<SingInController>();
+
 @override
 
   @override
