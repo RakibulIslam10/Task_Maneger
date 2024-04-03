@@ -90,9 +90,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddNewTaskScreen(getApiCall: () {
-                    getDataFromApi();
-                  }),
+                  builder: (context) => const AddNewTaskScreen(),
                 ));
           },
           label: const Text("Add")),
@@ -102,7 +100,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   Widget taskCounterSection(
       List<TaskCountBuyStatusData> listOfTaskCountBuyStatusData) {
     return SizedBox(
-      height: 95,
+      height: 130,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.separated(
